@@ -6,6 +6,9 @@
       - DateTableHeader
       - DateRow
 */
+//https://facebook.github.io/react/docs/thinking-in-react.html
+//https://github.com/johnnywendy/reacttutorial
+//http://localhost:3000/
 var DateFormatter = React.createClass({
   loadCommentsFromServer: function() {
     $.ajax({
