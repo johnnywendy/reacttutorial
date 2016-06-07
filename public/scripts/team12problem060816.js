@@ -1,5 +1,12 @@
 // team12problem060816.js
-var CommentBox = React.createClass({
+/* Hierarchy 
+  - DateFormatter
+    - DateInput
+    - DateOutput
+      - DateTableHeader
+      - DateRow
+*/
+var DateFormatter = React.createClass({
   loadCommentsFromServer: function() {
     $.ajax({
       url: this.props.url,
@@ -117,6 +124,6 @@ var Comment = React.createClass({
 });
 
 ReactDOM.render(
-  <CommentBox url="/api/comments" pollInterval={2000} />,
+  <DateFormatter url="/api/team12problem060816" pollInterval={2000} />,
   document.getElementById('content')
 );
