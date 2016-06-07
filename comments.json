@@ -1,12 +1,22 @@
 [
     {
         "id": 1388534400000,
-        "author": "Pete Hunt",
+        "author": "John Mendiola",
         "text": "Hey there!"
     },
     {
         "id": 1420070400000,
         "author": "Paul O’Shannessy",
         "text": "React is *great*!"
+    },
+    {
+        "id": 1465330005313,
+        "author": "hello",
+        "text": "sdfsdf"
+    },
+    {
+        "id": 1465330013406,
+        "author": "Name",
+        "text": "hello"
     }
 ]
