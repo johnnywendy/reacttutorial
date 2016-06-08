@@ -47,7 +47,7 @@ var DateFormatter = React.createClass({
   render: function() {
     return (
       <div className="dateFormatter">
-        <h1>Dates</h1>
+        <h1>Dates for Team 12 Problem </h1>
         <DateInput onDateSubmit={this.handleDateSubmit} />
         <DateOutput data={this.state.data} />
       </div>
