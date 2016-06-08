@@ -10,7 +10,7 @@
 //https://github.com/johnnywendy/reacttutorial
 //http://localhost:3000/
 var DateFormatter = React.createClass({
-  loadCommentsFromServer: function() {
+  loadDatesFromServer: function() {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
@@ -23,12 +23,12 @@ var DateFormatter = React.createClass({
       }.bind(this)
     });
   },
-  handleCommentSubmit: function(comment) {
+  handleDateSubmit: function(Date) {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
       type: 'POST',
-      data: comment,
+      data: Date,
       success: function(data) {
         this.setState({data: data});
       }.bind(this),
@@ -41,71 +41,44 @@ var DateFormatter = React.createClass({
     return {data: []};
   },
   componentDidMount: function() {
-    this.loadCommentsFromServer();
-    setInterval(this.loadCommentsFromServer, this.props.pollInterval);
+    this.loadDatesFromServer();
+    setInterval(this.loadDatesFromServer, this.props.pollInterval);
   },
   render: function() {
     return (
-      <div className="commentBox">
-        <h1>Comments</h1>
-        <CommentList data={this.state.data} />
-        <CommentForm onCommentSubmit={this.handleCommentSubmit} />
+      <div className="dateFormatter">
+        <h1>Dates</h1>
+        <DateInput onDateSubmit={this.handleDateSubmit} />
+        <DateOutput data={this.state.data} />
       </div>
     );
   }
 });
 
-var CommentList = React.createClass({
-  render: function() {
-    var commentNodes = this.props.data.map(function(comment) {
-      return (
-        <Comment author={comment.author} key={comment.id}>
-          {comment.text}
-        </Comment>
-      );
-    });
-    return (
-      <div className="commentList">
-        {commentNodes}
-      </div>
-    );
-  }
-});
-
-var CommentForm = React.createClass({
+var DateInput = React.createClass({
   getInitialState: function() {
-    return {author: '', text: ''};
+    return {date: ''};
   },
-  handleAuthorChange: function(e) {
-    this.setState({author: e.target.value});
-  },
-  handleTextChange: function(e) {
-    this.setState({text: e.target.value});
+  handleDateChange: function(e) {
+    this.setState({date: e.target.value});
   },
   handleSubmit: function(e) {
     e.preventDefault();
-    var author = this.state.author.trim();
-    var text = this.state.text.trim();
-    if (!text || !author) {
+    var date = this.state.date.trim();
+    if (!date) {
       return;
     }
-    this.props.onCommentSubmit({author: author, text: text});
-    this.setState({author: '', text: ''});
+    this.props.onDateSubmit({date: date});
+    this.setState({date: ''});
   },
   render: function() {
     return (
-      <form className="commentForm" onSubmit={this.handleSubmit}>
+      <form className="dateInput" onSubmit={this.handleSubmit}>
         <input
           type="text"
-          placeholder="Your name"
-          value={this.state.author}
-          onChange={this.handleAuthorChange}
-        />
-        <input
-          type="text"
-          placeholder="Say something..."
-          value={this.state.text}
-          onChange={this.handleTextChange}
+          placeholder="Date Input"
+          value={this.state.date}
+          onChange={this.handleDateChange}
         />
         <input type="submit" value="Post" />
       </form>
@@ -113,12 +86,29 @@ var CommentForm = React.createClass({
   }
 });
 
-var Comment = React.createClass({
+var DateOutput = React.createClass({
+  render: function() {
+    var dateNodes = this.props.data.map(function(date) {
+      return (
+        <Date date={date.date} key={date.id}>
+          {date.text}
+        </Date>
+      );
+    });
+    return (
+      <div className="dateOutput">
+        {dateNodes}
+      </div>
+    );
+  }
+});
+
+var Date = React.createClass({
   render: function() {
     return (
-      <div className="comment">
-        <h2 className="commentAuthor">
-          {this.props.author}
+      <div className="date">
+        <h2 className="dateOutput">
+          {this.props.date}
         </h2>
         {this.props.children}
       </div>
